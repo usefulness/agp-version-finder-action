@@ -9,16 +9,16 @@ inputs:
 
 outputs:
   latest-alpha:
-    description: "Contains latest alpha AGP version"
+    description: "Returns latest alpha AGP version"
     value: ${{ steps.run-action.outputs.latest-alpha }}
   latest-beta:
-    description: "Contains latest beta AGP version"
+    description: "Returns latest beta AGP version"
     value: ${{ steps.run-action.outputs.latest-beta }}
   latest-rc:
-    description: "Contains latest rc AGP version"
+    description: "Returns latest RC AGP version"
     value: ${{ steps.run-action.outputs.latest-rc }}
   latest-stable:
-    description: "Contains latest stable AGP version"
+    description: "Returns latest stable AGP version"
     value: ${{ steps.run-action.outputs.latest-stable }}
 
 branding:
