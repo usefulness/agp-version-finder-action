@@ -1,0 +1,35 @@
+on:
+  pull_request:
+
+jobs:
+  smoke_test:
+    runs-on: ubuntu-latest
+    name: Run action
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: agp-version-finder
+        uses: ./
+        with:
+          debug: true
+
+      - uses: peter-evans/find-comment@v2
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: smoke-test
+
+      - uses: peter-evans/create-or-update-comment@v2
+        with:
+          body: |
+            ### smoke-test
+            |channel|version|
+            |---|---|
+            |_stable_|`${{ steps.agp-version-finder.outputs.latest-stable }}`|
+            |_rc_|`${{ steps.agp-version-finder.outputs.latest-rc }}`|
+            |_beta_|`${{ steps.agp-version-finder.outputs.latest-beta }}`|
+            |_alpha_|`${{ steps.agp-version-finder.outputs.latest-alpha }}`|
+          edit-mode: replace
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
