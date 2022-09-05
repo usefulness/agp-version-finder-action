@@ -1,0 +1,34 @@
+name: "Android Gradle Plugin version finder"
+description: "Find current stable and latest Android Gradle Plugin version for later use in Github Actions matrix"
+
+inputs:
+  debug:
+    description: 'if true, shows additional debug information'
+    required: false
+    default: 'false'
+
+outputs:
+  latest-alpha:
+    description: "Contains latest alpha AGP version"
+    value: ${{ steps.run-action.outputs.latest-alpha }}
+  latest-beta:
+    description: "Contains latest beta AGP version"
+    value: ${{ steps.run-action.outputs.latest-beta }}
+  latest-rc:
+    description: "Contains latest rc AGP version"
+    value: ${{ steps.run-action.outputs.latest-rc }}
+  latest-stable:
+    description: "Contains latest stable AGP version"
+    value: ${{ steps.run-action.outputs.latest-stable }}
+
+branding:
+  color: 'green'
+  icon: 'search'
+runs:
+  using: 'composite'
+  steps:
+    - id: run-action
+      env:
+        INPUT_DEBUG: ${{ inputs.debug }}
+      run: python3 '${{ github.action_path }}'/entrypoint.py
+      shell: bash
