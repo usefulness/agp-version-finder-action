@@ -41,6 +41,6 @@ The action only exposes multiple `output`s containing latest version for each AG
 All available action outputs, representing respective AGP release channels:
 
 - `latest-stable` i.e. "7.2.2"
-- `latest-rc` i.e. "7.4.0-alpha13"
-- `latest-beta`
-- `latest-alpha`
+- `latest-rc` i.e. "7.3.0-rc01"
+- `latest-beta` i.e. "7.3.0-beta02"
+- `latest-alpha`  i.e. "7.4.0-alpha13"
