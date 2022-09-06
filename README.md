@@ -6,10 +6,9 @@ Find current stable and latest Android Gradle Plugin version for GitHub Actions 
 
 ## Usage
 
-The action only exposes multiple _output_s containing latest version for each AGP release channel.
+The action only exposes multiple `output`s containing latest version for each AGP release channel.
 
 ### Configuration:
-
 ```yml
   jobs:
     provide-agp-version-matrix:
@@ -17,11 +16,11 @@ The action only exposes multiple _output_s containing latest version for each AG
       outputs:
         agp-versions: ${{ steps.build-agp-matrix.outputs.agp-versions }}
       steps:
-        # Fetch all agp versions
+        # Fetch latest AGP versions
         - id: agp-version-finder
           uses: usefulness/agp-version-finder-action@v1
 
-        # Consume action outputs to build 
+        # Consume action outputs to build AGP matrix
         - id: build-agp-matrix
           run: echo '::set-output name=agp-versions::["${{ steps.agp-version-finder.outputs.latest-stable }}", "${{ steps.agp-version-finder.outputs.latest-alpha }}"]'
 
@@ -37,10 +36,11 @@ The action only exposes multiple _output_s containing latest version for each AG
             # When evaluated will be replaced with array ["7.2.2", "7.4.0-alpha13"] 
             agp: ${{ fromJSON(needs.provide-agp-version-matrix.outputs.agp-versions) }}
 ```
+[source](https://docs.github.com/en/actions/learn-github-actions/expressions#fromjson)
 
 All available action outputs, representing respective AGP release channels:
 
-- `latest-stable`
-- `latest-rc`
-- `latest-beta`
-- `latest-alpha`
+- `latest-stable` i.e. "7.2.2"
+- `latest-rc` i.e. "7.3.0-rc01"
+- `latest-beta` i.e. "7.3.0-beta02"
+- `latest-alpha`  i.e. "7.4.0-alpha13"
