@@ -22,7 +22,7 @@ The action only exposes multiple `output`s containing latest version for each AG
 
         # Consume action outputs to build AGP matrix
         - id: build-agp-matrix
-          run: echo '::set-output name=agp-versions::["${{ steps.agp-version-finder.outputs.latest-stable }}", "${{ steps.agp-version-finder.outputs.latest-alpha }}"]'
+          run: echo 'agp-versions=["${{ steps.agp-version-finder.outputs.latest-stable }}", "${{ steps.agp-version-finder.outputs.latest-alpha }}"]' >> $GITHUB_OUTPUT
 
       actual-tests:
         runs-on: ubuntu-latest

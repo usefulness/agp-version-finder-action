@@ -41,7 +41,7 @@ if is_debug():
             rc_count={len(all_rc)}
         """)
 
-os.system(f"echo \"::set-output name=latest-stable::{all_stable[-1]}\"")
-os.system(f"echo \"::set-output name=latest-alpha::{all_alpha[-1]}\"")
-os.system(f"echo \"::set-output name=latest-beta::{all_beta[-1]}\"")
-os.system(f"echo \"::set-output name=latest-rc::{all_rc[-1]}\"")
+os.system(f"echo \"latest-stable={all_stable[-1]}\" >> $GITHUB_OUTPUT")
+os.system(f"echo \"latest-alpha={all_alpha[-1]}\" >> $GITHUB_OUTPUT")
+os.system(f"echo \"latest-beta={all_beta[-1]}\" >> $GITHUB_OUTPUT")
+os.system(f"echo \"latest-rc={all_rc[-1]}\" >> $GITHUB_OUTPUT")
