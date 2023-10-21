@@ -31,7 +31,7 @@ The action only exposes multiple `output`s containing latest version for each AG
         strategy:
           fail-fast: false
           matrix:
-            javaVersion: [ 17 ]
+            javaVersion: [ 21 ]
             gradle: [ current, release-candidate ]
             # When evaluated will be replaced with array ["7.2.2", "7.4.0-alpha13"] 
             agp: ${{ fromJSON(needs.provide-agp-version-matrix.outputs.agp-versions) }}
