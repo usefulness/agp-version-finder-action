@@ -5,7 +5,7 @@ import re
 from xml.dom import minidom
 
 
-def versionRegex(_suffix):
+def version_regex(_suffix):
     return rf"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-{_suffix}([0-9]\d*)$"
 
 
@@ -13,18 +13,16 @@ def is_debug():
     return os.getenv("INPUT_DEBUG", False)
 
 
-url = "https://dl.google.com/dl/android/maven2/com/android/tools/build/group-index.xml"
+url = "https://dl.google.com/android/maven2/com/android/tools/build/gradle/maven-metadata.xml"
 stable_regex = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
-alpha_regex = re.compile(versionRegex("alpha"))
-beta_regex = re.compile(versionRegex("beta"))
-rc_regex = re.compile(versionRegex("rc"))
+alpha_regex = re.compile(version_regex("alpha"))
+beta_regex = re.compile(version_regex("beta"))
+rc_regex = re.compile(version_regex("rc"))
 
 with urllib.request.urlopen(url) as response:
     xml = response.read()
     root_tag = minidom.parseString(xml)
-    group_tag = root_tag.getElementsByTagName("com.android.tools.build")[0]
-    module_tag = group_tag.getElementsByTagName("gradle")[0]
-    versions = module_tag.attributes["versions"].value.split(",")
+    versions = [elem.firstChild.data for elem in root_tag.getElementsByTagName("version")]
 
 all_stable = [s for s in versions if stable_regex.match(s)]
 all_alpha = [s for s in versions if alpha_regex.match(s)]
