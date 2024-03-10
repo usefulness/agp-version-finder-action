@@ -10,7 +10,12 @@ def version_regex(_suffix):
 
 
 def is_debug():
-    return os.getenv("INPUT_DEBUG", False)
+    return os.getenv("INPUT_DEBUG", "false").casefold() == "true".casefold()
+
+
+def github_output(key, value):
+    with open(os.environ['GITHUB_OUTPUT'], mode='a', encoding='UTF-8') as fh:
+        print(f'{key}={value}', file=fh)
 
 
 url = "https://dl.google.com/android/maven2/com/android/tools/build/gradle/maven-metadata.xml"
@@ -39,7 +44,7 @@ if is_debug():
             rc_count={len(all_rc)}
         """)
 
-os.system(f"echo \"latest-stable={all_stable[-1]}\" >> $GITHUB_OUTPUT")
-os.system(f"echo \"latest-alpha={all_alpha[-1]}\" >> $GITHUB_OUTPUT")
-os.system(f"echo \"latest-beta={all_beta[-1]}\" >> $GITHUB_OUTPUT")
-os.system(f"echo \"latest-rc={all_rc[-1]}\" >> $GITHUB_OUTPUT")
+github_output(key="latest-stable", value=all_stable[-1])
+github_output(key="latest-alpha", value=all_alpha[-1])
+github_output(key="latest-beta", value=all_beta[-1])
+github_output(key="latest-rc", value=all_rc[-1])
