@@ -33,3 +33,18 @@ jobs:
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  os-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    name: OS smoke test
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: agp-version-finder
+        uses: ./
+
+      - run: echo "${{join(steps.agp-version-finder.outputs.*, ' ')}}"
