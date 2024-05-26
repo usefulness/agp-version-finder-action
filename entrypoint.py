@@ -50,9 +50,7 @@ latest_beta = all_beta[-1]
 latest_rc = all_rc[-1]
 
 version_to_resolve = os.getenv("INPUT_VERSION_TO_RESOLVE", "").strip()
-if version_to_resolve == "":
-    resolved_version = ""
-elif version_to_resolve in ["stable", "current"]:
+if version_to_resolve in ["stable", "current"]:
     resolved_version = latest_stable
 elif version_to_resolve == "alpha":
     resolved_version = latest_alpha
@@ -61,7 +59,7 @@ elif version_to_resolve == "beta":
 elif version_to_resolve in ["release-candidate", "rc"]:
     resolved_version = latest_rc
 else:
-    raise Exception("Unrecognised `version-to-resolve` input value. Has to be one of [`stable`, `alpha`, `beta`, `rc`]")
+    resolved_version = version_to_resolve  # pass through
 
 github_output(key="latest-stable", value=latest_stable)
 github_output(key="latest-alpha", value=latest_alpha)
