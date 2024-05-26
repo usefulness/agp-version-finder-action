@@ -7,7 +7,7 @@ inputs:
     required: false
     default: 'false'
   version-to-resolve:
-    description: 'Has to be one of `stable`, `alpha`, `beta`, `rc`. Will be translated into specific version, available under `outputs.resolved-version`'
+    description: 'Has to be one of `stable`, `alpha`, `beta`, `rc`. Will be translated into specific version, available under `outputs.resolved-version`. Unrecognised values will be passed through to the output for convenience'
     required: false
 
 outputs:
@@ -24,7 +24,7 @@ outputs:
     description: "Returns latest stable AGP version"
     value: ${{ steps.run-action.outputs.latest-stable }}
   resolved-version:
-    description: "Actual semver version resolved from `version-to-resolve`"
+    description: "Semver version resolved from `version-to-resolve`"
     value: ${{ steps.run-action.outputs.resolved-version }}
 
 branding:
