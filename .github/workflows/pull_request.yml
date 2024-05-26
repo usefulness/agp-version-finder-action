@@ -12,6 +12,7 @@ jobs:
         uses: ./
         with:
           debug: true
+          version-to-resolve: 'stable'
 
       - uses: peter-evans/find-comment@v3
         id: find_comment
@@ -29,6 +30,7 @@ jobs:
             |_rc_|`${{ steps.agp-version-finder.outputs.latest-rc }}`|
             |_beta_|`${{ steps.agp-version-finder.outputs.latest-beta }}`|
             |_alpha_|`${{ steps.agp-version-finder.outputs.latest-alpha }}`|
+            |_resolved stable_|`${{ steps.agp-version-finder.outputs.resolved-version }}`|
           edit-mode: replace
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}

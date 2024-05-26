@@ -6,6 +6,9 @@ inputs:
     description: 'if true, shows additional debug information'
     required: false
     default: 'false'
+  version-to-resolve:
+    description: 'Has to be one of `stable`, `alpha`, `beta`, `rc`. Will be translated into specific version, available under `outputs.resolved-version`'
+    required: false
 
 outputs:
   latest-alpha:
@@ -20,6 +23,9 @@ outputs:
   latest-stable:
     description: "Returns latest stable AGP version"
     value: ${{ steps.run-action.outputs.latest-stable }}
+  resolved-version:
+    description: "Actual semver version resolved from `version-to-resolve`"
+    value: ${{ steps.run-action.outputs.resolved-version }}
 
 branding:
   color: 'green'
@@ -30,5 +36,6 @@ runs:
     - id: run-action
       env:
         INPUT_DEBUG: ${{ inputs.debug }}
+        INPUT_VERSION_TO_RESOLVE: ${{ inputs.version-to-resolve }}
       run: python3 '${{ github.action_path }}'/entrypoint.py
       shell: bash
