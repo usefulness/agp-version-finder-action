@@ -9,6 +9,27 @@ Find current stable and latest Android Gradle Plugin version for GitHub Actions 
 The action only exposes multiple `output`s containing latest version for each AGP release channel.
 
 ### Configuration:
+#### Simple usage:
+```yml
+  jobs:
+      actual-tests:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            javaVersion: [ 21 ]
+            gradle: [ current, release-candidate ]
+            agp: ["stable", "rc", "alpha"]
+
+        - id: agp-version-finder
+          uses: usefulness/agp-version-finder-action@v1
+          with:
+            version-to-resolve: ${{ matrix.agp }}
+
+        - run: echo ${{ steps.agp-version-finder.outputs.resolved-version }}
+```
+
+#### Extra: Use AGP version in job name:
 ```yml
   jobs:
     provide-agp-version-matrix:
