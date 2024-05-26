@@ -44,7 +44,25 @@ if is_debug():
             rc_count={len(all_rc)}
         """)
 
-github_output(key="latest-stable", value=all_stable[-1])
-github_output(key="latest-alpha", value=all_alpha[-1])
-github_output(key="latest-beta", value=all_beta[-1])
-github_output(key="latest-rc", value=all_rc[-1])
+latest_stable = all_stable[-1]
+latest_alpha = all_alpha[-1]
+latest_beta = all_beta[-1]
+latest_rc = all_rc[-1]
+
+version_to_resolve = os.getenv("INPUT_VERSION_TO_RESOLVE", "")
+if version_to_resolve in ["stable", "current"]:
+    resolved_version = latest_stable
+elif version_to_resolve == "alpha":
+    resolved_version = latest_alpha
+elif version_to_resolve == "beta":
+    resolved_version = latest_beta
+elif version_to_resolve in ["release-candidate", "rc"]:
+    resolved_version = latest_rc
+else:
+    resolved_version = ""
+
+github_output(key="latest-stable", value=latest_stable)
+github_output(key="latest-alpha", value=latest_alpha)
+github_output(key="latest-beta", value=latest_beta)
+github_output(key="latest-rc", value=latest_rc)
+github_output(key="resolved-version", value=resolved_version)
