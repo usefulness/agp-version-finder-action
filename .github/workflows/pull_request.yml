@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Run action
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - id: agp-version-finder
         uses: ./
@@ -44,7 +44,7 @@ jobs:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
     name: OS smoke test
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - id: agp-version-finder
         uses: ./
